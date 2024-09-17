@@ -19,7 +19,12 @@
 12 | [What is the difference between exec () and test () methods in javascript?](https://github.com/erblackcode/interview-questions?tab=readme-ov-file#what-is-the-difference-between-exec--and-test--methods-in-javascript)
 13 | [What is currying in javascript?](https://github.com/erblackcode/interview-questions?tab=readme-ov-file#what-is-currying-in-javascript) |
 14 | [What are Pure Functions in JS?](https://github.com/erblackcode/interview-questions?tab=readme-ov-file#what-are-pure-functions-in-js) |
-15 | [How to make multiple API’s call in JS at one time?](https://github.com/erblackcode/interview-questions?tab=readme-ov-file#how-to-make-multiple-apis-call-in-js-at-one-time) |
+15 | [Is javascript a statically typed or a dynamically typed language?](https://github.com/erblackcode/interview-questions?tab=readme-ov-file#Is-javascript-a-statically-typed-or-a-dynamically-typed-language) |
+16 | [Explain Closures in JavaScript?](https://github.com/erblackcode/interview-questions?tab=readme-ov-file#Explain-Closures-in-JavaScript) |
+17 | [What is memoization?](https://github.com/erblackcode/interview-questions?tab=readme-ov-file#What-is-memoization) |
+18 | [What are generator functions?](https://github.com/erblackcode/interview-questions?What-are-generator-functions) |
+19 | [What is Object Destructuring?](https://github.com/erblackcode/interview-questions?What-is-Object-Destructuring) |
+20 | [How to make multiple API’s call in JS at one time?](https://github.com/erblackcode/interview-questions?tab=readme-ov-file#how-to-make-multiple-apis-call-in-js-at-one-time) |
 
 ## Questions
 
@@ -320,6 +325,167 @@ add(3)(4) ;
 
 ### What are Pure Functions in JS? 
 A Pure Function is a function (a block of code) that always returns the same result if the same arguments are passed. It does not depend on any state or data change during a program’s execution. Rather, it only depends on its input arguments. 
+
+### Is javascript a statically typed or a dynamically typed language?
+
+JavaScript is a `dynamically typed` language. In a dynamically typed language, the type of a variable is checked during `run-time` and in statically, where the type of a variable is checked during compile-time.
+
+For example, a variable that is assigned a number type can be converted to a string type:
+
+```javascript
+var a = 23;
+var a = "Hello World!";
+```
+
+### Explain Closures in JavaScript?
+Closures are an ability of a function to remember the variables and functions that are declared in its outer scope.
+
+Let’s understand closures by example:
+
+```javascript
+function randomFunc(){
+  var obj1 = {name:"Vivian", age:45};
+
+  return function(){
+    console.log(obj1.name + " is "+ "awesome"); // Has access to obj1 even when the randomFunc function is executed
+
+  }
+}
+
+var initialiseClosure = randomFunc(); // Returns a function
+
+initialiseClosure(); 
+```
+Let’s understand the code above,
+
+The function randomFunc() gets executed and returns a function when we assign it to a variable:
+```javascript
+var initialiseClosure = randomFunc();
+```
+The returned function is then executed when we invoke initialiseClosure:
+```javascript
+initialiseClosure(); 
+```
+The line of code above outputs “Vivian is awesome” and this is possible because of closure.
+
+```javascript
+console.log(obj1.name + " is "+ "awesome");
+```
+
+When the function randomFunc() runs, it seems that the returning function is using the variable obj1 inside it:
+
+Therefore randomFunc(), instead of destroying the value of obj1 after execution, saves the value in the memory for further reference. This is the reason why the returning function is able to use the variable declared in the outer scope even after the function is already executed.
+
+`This ability of a function to store a variable for further reference even after it is executed is called Closure.`
+
+### What is memoization?
+Memoization is a form of caching where the return value of a function is cached based on its parameters. If the parameter of that function is not changed, the cached version of the function is returned.
+Let’s understand memoization, by converting a simple function to a memoized function:
+
+```javascript
+function addTo256(num){
+  return num + 256;
+}
+addTo256(20); // Returns 276
+addTo256(40); // Returns 296
+addTo256(20); // Returns 276
+```
+
+In the code above, we have written a function that adds the parameter to 256 and returns it.
+When we are calling the function addTo256 again with the same parameter (“20” in the case above), we are computing the result again for the same parameter.
+
+**Why Memoization -** Computing the result with the same parameter, again and again, is not a big deal in the above case, but imagine if the function does some heavy-duty work, then, computing the result again and again with the same parameter will lead to wastage of time.
+
+This is where memoization comes in, by using memoization we can store(cache) the computed results based on the parameters. If the same parameter is used again while invoking the function, instead of computing the result, we directly return the stored (cached) value.
+
+Let’s convert the above function addTo256, to a memoized function:
+
+```javascript
+function memoizedAddTo256(){
+  var cache = {};
+
+  return function(num){
+    if(num in cache){
+      console.log("cached value");
+      return cache[num]
+    }
+    else{
+      cache[num] = num + 256;
+      return cache[num];
+    }
+  }
+}
+var memoizedFunc = memoizedAddTo256();
+
+memoizedFunc(20); // Normal return
+memoizedFunc(20); // Cached return
+```
+
+In the code above, if we run the memoizedFunc function with the same parameter, instead of computing the result again, it returns the cached result.
+
+`memoized function is same as pure function - both are return the same value for the same input`
+
+### What are generator functions?
+Introduced in the ES6 version, generator functions are a special class of functions.
+
+They can be stopped midway and then continue from where they had stopped.
+
+Generator functions are declared with the function* keyword instead of the normal function keyword:
+```javascript
+function* genFunc(){
+  // Perform operation
+} 
+```
+In the case of generator functions, when called, they do not execute the code, instead, they return a generator object. This generator object handles the execution
+```javascript
+function* genFunc(){
+  yield 3;
+  yield 4;
+}
+genFunc(); // Returns Object [Generator] {}
+```
+The generator object consists of a method called next(), this method when called, executes the code until the nearest yield statement, and returns the yield value.
+
+For example, if we run the next() method on the above code:
+```javascript
+genFunc().next(); // Returns {value: 3, done:false}
+```
+As one can see the next method returns an object consisting of a value and done properties.  Value property represents the yielded value. Done property tells us whether the function code is finished or not. (Returns true if finished).
+
+Generator functions are used to return iterators. Let’s see an example where an iterator is returned:
+```javascript
+function* iteratorFunc() {
+  let count = 0;
+  for (let i = 0; i < 2; i++) {
+      count++;
+      yield i;
+  }
+  return count;
+}
+
+let iterator = iteratorFunc();
+console.log(iterator.next()); // {value:0,done:false}
+console.log(iterator.next()); // {value:1,done:false}
+console.log(iterator.next()); // {value:2,done:true}
+```
+As you can see in the code above, the last line returns done:true, since the code reaches the return statement
+
+### What is Object Destructuring?
+
+Object destructuring is a new way to extract elements from an object or an array.
+```javascript
+const classDetails = {
+  strength: 78,
+  benches: 39,
+  blackBoard:1
+}
+
+const {strength:classStrength, benches:classBenches,blackBoard:classBlackBoard} = classDetails;
+
+console.log(classStrength); // Outputs 78
+console.log(classBenches); // Outputs 39
+console.log(classBlackBoard); // Outputs 1
+```
 
 ### How to make multiple API’s call in JS at one time? 
 
