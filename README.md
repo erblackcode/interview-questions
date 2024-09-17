@@ -1,6 +1,27 @@
 
 # JavaScript Interview Questions
 
+### Table of Contents 
+
+| No | Questions |
+|-| ----------------------- |
+1 | [What is the Difference between ForEach and Map?](https://github.com/erblackcode/interview-questions?tab=readme-ov-file#what-is-the-difference-between-foreach-and-map)  |
+2 | [What is Callback, Example of Predefined callback functions?](https://github.com/erblackcode/interview-questions?tab=readme-ov-file#what-is-callback-example-of-predefined-callback-functions) |
+3 | [What are Promises?](https://github.com/erblackcode/interview-questions?tab=readme-ov-file#what-are-promises) | 
+4 | [Explain higher order function in javascript?](https://github.com/erblackcode/interview-questions?tab=readme-ov-file#explain-higher-order-function-in-javascript) |
+5 | [What is Hoisting?](https://github.com/erblackcode/interview-questions?tab=readme-ov-file#what-is-hoisting) |
+6 | [What is the difference between let, var, const?](https://github.com/erblackcode/interview-questions?tab=readme-ov-file#what-is-the-difference-between-let-var-const)
+7 | [Const is unchangeable so why below code can perform?](https://github.com/erblackcode/interview-questions?tab=readme-ov-file#const-is-unchangeable-so-why-below-code-can-perform) | 
+8 | [Difference between arrow and normal function?](https://github.com/erblackcode/interview-questions?tab=readme-ov-file#difference-between-arrow-and-normal-function) |
+9 | [What is the Immediately invoked function in javascript?](https://github.com/erblackcode/interview-questions?tab=readme-ov-file#what-is-the-immediately-invoked-function-in-javascript) |
+10 | [What do you mean by strict mode in javascript?](https://github.com/erblackcode/interview-questions?tab=readme-ov-file#what-do-you-mean-by-strict-mode-in-javascript) |
+11 | [Explain call(), apply(), bind() methods?](https://github.com/erblackcode/interview-questions?tab=readme-ov-file#explain-call-apply-bind-methods) |
+12 | [What is the difference between exec () and test () methods in javascript?](https://github.com/erblackcode/interview-questions?tab=readme-ov-file#what-is-the-difference-between-exec--and-test--methods-in-javascript)
+13 | [What is currying in javascript?](https://github.com/erblackcode/interview-questions?tab=readme-ov-file#what-is-currying-in-javascript) |
+14 | [What are Pure Functions in JS?](https://github.com/erblackcode/interview-questions?tab=readme-ov-file#what-are-pure-functions-in-js) |
+15 | [How to make multiple API’s call in JS at one time?](https://github.com/erblackcode/interview-questions?tab=readme-ov-file#how-to-make-multiple-apis-call-in-js-at-one-time) |
+
+## Questions
 
 ### What is the Difference between ForEach and Map? 
 
