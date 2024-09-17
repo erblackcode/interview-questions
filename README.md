@@ -22,8 +22,8 @@
 15 | [Is javascript a statically typed or a dynamically typed language?](https://github.com/erblackcode/interview-questions?tab=readme-ov-file#Is-javascript-a-statically-typed-or-a-dynamically-typed-language) |
 16 | [Explain Closures in JavaScript?](https://github.com/erblackcode/interview-questions?tab=readme-ov-file#Explain-Closures-in-JavaScript) |
 17 | [What is memoization?](https://github.com/erblackcode/interview-questions?tab=readme-ov-file#What-is-memoization) |
-18 | [What are generator functions?](https://github.com/erblackcode/interview-questions?What-are-generator-functions) |
-19 | [What is Object Destructuring?](https://github.com/erblackcode/interview-questions?What-is-Object-Destructuring) |
+18 | [What are generator functions?](https://github.com/erblackcode/interview-questions?tab=readme-ov-file#What-are-generator-functions) |
+19 | [What is Object Destructuring?](https://github.com/erblackcode/interview-questions?tab=readme-ov-file#What-is-Object-Destructuring) |
 20 | [How to make multiple API’s call in JS at one time?](https://github.com/erblackcode/interview-questions?tab=readme-ov-file#how-to-make-multiple-apis-call-in-js-at-one-time) |
 
 ## Questions
