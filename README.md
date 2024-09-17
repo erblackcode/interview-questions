@@ -24,6 +24,8 @@
 17 | [What is memoization?](https://github.com/erblackcode/interview-questions?tab=readme-ov-file#What-is-memoization) |
 18 | [What are generator functions?](https://github.com/erblackcode/interview-questions?tab=readme-ov-file#What-are-generator-functions) |
 19 | [What is Object Destructuring?](https://github.com/erblackcode/interview-questions?tab=readme-ov-file#What-is-Object-Destructuring) |
+20| [What is the role of deferred scripts in JavaScript?](https://github.com/erblackcode/interview-questions?tab=readme-ov-file#What-is-the-role-of-deferred-scripts-in-JavaScript)|
+21| [What is the output of the following code?](https://github.com/erblackcode/interview-questions?tab=readme-ov-file#What-is-the-output-of-the-following-code)|
 20 | [How to make multiple API’s call in JS at one time?](https://github.com/erblackcode/interview-questions?tab=readme-ov-file#how-to-make-multiple-apis-call-in-js-at-one-time) |
 
 ## Questions
@@ -485,6 +487,55 @@ const {strength:classStrength, benches:classBenches,blackBoard:classBlackBoard} 
 console.log(classStrength); // Outputs 78
 console.log(classBenches); // Outputs 39
 console.log(classBlackBoard); // Outputs 1
+```
+### What is the role of deferred scripts in JavaScript?
+The processing of HTML code while the page loads are disabled by nature till the script hasn't halted. Your page will be affected if your network is a bit slow, or if the script is very hefty. When you use Deferred, the script waits for the HTML parser to finish before executing it. This reduces the time it takes for web pages to load, allowing them to appear more quickly.
+
+### What is the output of the following code?
+```javascript
+const b = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+
+for (let i = 0; i < 10; i++) {
+  setTimeout(() => console.log(b[i]), 1000);
+}
+
+for (var i = 0; i < 10; i++) {
+  setTimeout(() => console.log(b[i]), 1000);
+}
+```
+
+**Answer -**
+```javascript
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+undefined
+undefined
+undefined
+undefined
+undefined
+undefined
+undefined
+undefined
+undefined
+undefined
+```
+`The main difference is scoping rules. Variables declared by var keyword are scoped to the immediate function body (hence the function scope) while let variables are scoped to the immediate enclosing block denoted by { } (hence the block scope)`
+
+An experiment that is possible is to make let behave like var. To make let behave like var, you can use (and run) the code below.
+
+```javascript
+let i;
+for (i = 0; i < 3; i++) {
+  setTimeout(() => console.log(i), 1);
+}
 ```
 
 ### How to make multiple API’s call in JS at one time? 
