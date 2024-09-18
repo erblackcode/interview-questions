@@ -539,5 +539,47 @@ for (i = 0; i < 3; i++) {
 ```
 
 ### How to make multiple API’s call in JS at one time? 
+#### Two independant calls, but I need the data from both before moving on
+So maybe I need data from two sources, but I don't want the subsequent code to run till both requests have completed.
+
+I could just use await and do them one by one.
+```javascript
+async function getData(){
+    const url1 = //...
+    const url2 = //...
+
+    const response1 = await fetch(url1)
+    const data1 = await response1.json()
+
+    const response2 = await fetch(url2)
+    const data2 = await response1.json()
+
+    // do what you want with data1 and data2 here
+}
+getData()
+``` 
+
+This works great the only downside is the await keyword pauses the function so the second request won't happen till the first one finishes. We can have them both run at the same time but make sure the function doesn't continue till they both complete using Promise.all().
+
+`As promise.all() takes array of promisses as an input and return the promise as an output`
+
+`it always have to use when you sure all promises will get resolve, if any promise will fail to resolve it will give you an error`
+
+```javascript
+async function getData(){
+    const url1 = //...
+    const url2 = //...
+
+    const responses = await Promise.all([fetch(url1), fetch(url2)])
+
+    const data1 = await responses[0].json()
+    const data2 = await responses[1].json()
+
+    // do what you want with data1 and data2 here
+}
+
+getData()
+```
+Promise.all returns a promise that doesn't resolve till all promises in the array passed in are resolved (the two fetch calls). So both fetch calls are initiated but the function is paused on the Promise.all not the individual fetches. This works well if one of the two requests take a really long time that it would speed things up to have both requests made right away.
 
  
