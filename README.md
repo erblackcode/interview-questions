@@ -27,7 +27,7 @@
 20| [What is the role of deferred scripts in JavaScript?](https://github.com/erblackcode/interview-questions?tab=readme-ov-file#What-is-the-role-of-deferred-scripts-in-JavaScript)|
 21| [What is the output of the following code?](https://github.com/erblackcode/interview-questions?tab=readme-ov-file#What-is-the-output-of-the-following-code)|
 20 | [How to make multiple API’s call in JS at one time?](https://github.com/erblackcode/interview-questions?tab=readme-ov-file#how-to-make-multiple-apis-call-in-js-at-one-time) |
-21 | [Differences between Promise.all() and Promise.allSettled() in JS?]([https://github.com/erblackcode/interview-questions?tab=readme-ov-file#Differences-between-Promise.all()-and-Promise.allSettled()-in-JS](https://github.com/erblackcode/interview-questions?tab=readme-ov-file#differences-between-promiseall-and-promiseallsettled-in-js) |
+21 | [Differences between Promise.all() and Promise.allSettled() in JS?](https://github.com/erblackcode/interview-questions?tab=readme-ov-file#differences-between-promiseall-and-promiseallsettled-in-js) |
 
 ## Questions
 
