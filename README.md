@@ -27,6 +27,7 @@
 20| [What is the role of deferred scripts in JavaScript?](https://github.com/erblackcode/interview-questions?tab=readme-ov-file#What-is-the-role-of-deferred-scripts-in-JavaScript)|
 21| [What is the output of the following code?](https://github.com/erblackcode/interview-questions?tab=readme-ov-file#What-is-the-output-of-the-following-code)|
 20 | [How to make multiple API’s call in JS at one time?](https://github.com/erblackcode/interview-questions?tab=readme-ov-file#how-to-make-multiple-apis-call-in-js-at-one-time) |
+21 | [Differences between Promise.all() and Promise.allSettled() in JS?](https://github.com/erblackcode/interview-questions?tab=readme-ov-file#Differences-between-Promise.all()-and-Promise.allSettled()-in-JS) |
 
 ## Questions
 
@@ -582,4 +583,92 @@ getData()
 ```
 Promise.all returns a promise that doesn't resolve till all promises in the array passed in are resolved (the two fetch calls). So both fetch calls are initiated but the function is paused on the Promise.all not the individual fetches. This works well if one of the two requests take a really long time that it would speed things up to have both requests made right away.
 
+### Differences between Promise.all() and Promise.allSettled() in JS?
+
+**Promise.all() -**
+```javascript
+// **** When all promises are resolved ****
+
+const p1 = Promise.resolve(3);
+const p2 = 1337;
+const p3 = new Promise((resolve, reject) => {
+  setTimeout(() => {
+    resolve("foo");
+  }, 100);
+});
+
+// promise.all will return new promise and from 'then' it will resolved
+Promise.all([p1, p2, p3]).then((values) => {
+  console.log(values); // [3, 1337, "foo"]
+});
+
+// **** when from of all some of faild ****
+
+// All values are non-promises, so the returned promise gets fulfilled
+const p = Promise.all([1, 2, 3]);
+
+// The only input promise is already fulfilled,
+// so the returned promise gets fulfilled
+const p2 = Promise.all([1, 2, 3, Promise.resolve(444)]);
+
+// One (and the only) input promise is rejected,
+// so the returned promise gets rejected
+const p3 = Promise.all([1, 2, 3, Promise.reject(555)]);
+
+// Using setTimeout, we can execute code after the queue is empty
+// without resolving promises printing all so they are returing promises
+setTimeout(() => {
+  console.log(p);
+  console.log(p2);
+  console.log(p3);
+});
+
+// Logs:
+// Promise { <state>: "fulfilled", <value>: Array[3] }
+// Promise { <state>: "fulfilled", <value>: Array[4] }
+// Promise { <state>: "rejected", <reason>: 555 }
+```
+
+`Promise.all will reject as soon as one of the Promises in the array rejects. And when we will resolve that promises will get error in catch() callback function`
+
+**Promise.allSettled() -**
+```javascript
+Promise.allSettled([
+  Promise.resolve(33),
+  new Promise((resolve) => setTimeout(() => resolve(66), 0)),
+  99,
+  Promise.reject(new Error("an error")),
+]).then((values) => console.log(values));
+
+// [
+//   { status: 'fulfilled', value: 33 },
+//   { status: 'fulfilled', value: 66 },
+//   { status: 'fulfilled', value: 99 },
+//   { status: 'rejected', reason: Error: an error }
+// ]
+```
+
+`Promise.allSettled will never reject - it will resolve once all Promises in the array have either rejected or resolved.`
+
+#### Difference - 
+
+Their resolve values are different as well. Promise.all will resolve to an array of each of the values that the Promises resolve to - eg [Promise.resolve(1), Promise.resolve(2)] will turn into [1, 2]. Promise.allSettled will instead give you [{ status : 'fulfilled', value: 1 }, { status : 'fulfilled', value: 2 }].
+
+```javascript
+Promise.all([Promise.resolve(1), Promise.resolve(2)])
+  .then(console.log);
+Promise.allSettled([Promise.resolve(1), Promise.resolve(2)])
+  .then(console.log);
+```
+
+If one of the Promises rejects, the Promise.all will reject with a value of the rejection, but Promise.allSettled will resolve with an object of { status: 'rejected', reason: <error> } at that place in the array.
+
+```javascript
+Promise.all([Promise.reject(1), Promise.resolve(2)])
+  .catch((err) => {
+    console.log('err', err);
+  });
+Promise.allSettled([Promise.reject(1), Promise.resolve(2)])
+  .then(console.log);
+```
  
