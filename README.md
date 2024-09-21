@@ -32,7 +32,7 @@
 23 | [What are Anonymous Functions?](https://github.com/erblackcode/interview-questions?tab=readme-ov-file#What-are-Anonymous-Functions)|
 24 | [What is isomorphic javascript](https://github.com/erblackcode/interview-questions?tab=readme-ov-file#What-is-isomorphic-javascript)|
 25 | [What is a polyfill? Code a polyfill for the map method?](https://github.com/erblackcode/interview-questions?tab=readme-ov-file#What-is-a-polyfill-Code-a-polyfill-for-the-map-method) |
-26 | [What is a debounce function? (Example of use case - api call for search suggestions triggered when input changes)?](https://github.com/erblackcode/interview-questions?tab=readme-ov-file#What-is-a-debounce-function-Example-of-use-case-api-call-for-search-suggestions-triggered-when-input-changes)|
+26 | [What is a debounce function? (Example of use case - api call for search suggestions triggered when input changes)?](https://github.com/erblackcode/interview-questions?tab=readme-ov-file#what-is-a-debounce-function-example-of-use-case---api-call-for-search-suggestions-triggered-when-input-changes)|
 
 ## Questions
 
