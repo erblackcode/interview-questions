@@ -28,6 +28,11 @@
 21| [What is the output of the following code?](https://github.com/erblackcode/interview-questions?tab=readme-ov-file#What-is-the-output-of-the-following-code)|
 20 | [How to make multiple API’s call in JS at one time?](https://github.com/erblackcode/interview-questions?tab=readme-ov-file#how-to-make-multiple-apis-call-in-js-at-one-time) |
 21 | [Differences between Promise.all() and Promise.allSettled() in JS?](https://github.com/erblackcode/interview-questions?tab=readme-ov-file#differences-between-promiseall-and-promiseallsettled-in-js) |
+22 | [What is event bubbling and capturing? Which one is default and how to reverse the order?](https://github.com/erblackcode/interview-questions?tab=readme-ov-file#What-is-event-bubbling-and-capturing-Which-one-is-default-and-how-to-reverse-the-order) | 
+23 | [What are Anonymous Functions?](https://github.com/erblackcode/interview-questions?tab=readme-ov-file#What-are-Anonymous-Functions)|
+24 | [What is isomorphic javascript](https://github.com/erblackcode/interview-questions?tab=readme-ov-file#What-is-isomorphic-javascript)|
+25 | [What is a polyfill? Code a polyfill for the map method?](https://github.com/erblackcode/interview-questions?tab=readme-ov-file#What-is-a-polyfill-Code-a-polyfill-for-the-map-method) |
+26 | [What is a debounce function? (Example of use case - api call for search suggestions triggered when input changes)?](https://github.com/erblackcode/interview-questions?tab=readme-ov-file#What-is-a-debounce-function-Example-of-use-case-api-call-for-search-suggestions-triggered-when-input-changes)|
 
 ## Questions
 
@@ -671,4 +676,398 @@ Promise.all([Promise.reject(1), Promise.resolve(2)])
 Promise.allSettled([Promise.reject(1), Promise.resolve(2)])
   .then(console.log);
 ```
+
+### What is event bubbling and capturing? Which one is default and how to reverse the order?
+
+**Example 1:** Let’s take an example to understand event bubbling and event capturing.
+```html
+<!DOCTYPE html>
+<html>
+ 
+<head>
+    <script src=
+"https://code.jquery.com/jquery-3.6.0.min.js">
+    </script>
+    <style>
+        div {
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+        h2 {
+            color: black;
+        }
+        #grandparent {
+            background-color: green;
+            width: 300px;
+            height: 300px;
+        }
+        #parent {
+            background-color: blue;
+            width: 200px;
+            height: 200px;
+        }
+        #child {
+            background-color: red;
+            width: 100px;
+            height: 100px;
+        }
+    </style>
+</head>
+ 
+<body>
+    <div>
+        <h2>Welcome To GFG</h2>
+        <div id="grandparent">GrandParent
+            <div id="parent">Parent
+                <div id="child">Child</div>
+            </div>
+        </div>
+    </div>
+ 
+    <script>
+        const grandParent = document.getElementById("grandparent");
+        const parent = document.getElementById("parent");
+        const child = document.getElementById("child");
+ 
+        grandParent.addEventListener("click", (e) => {
+            console.log("GrandParent");
+        }, { capture: false });
+        parent.addEventListener("click", (e) => {
+            console.log("Parent");
+        }, { capture: false });
+        child.addEventListener("click", (e) => {
+            console.log("Child");
+        }, { capture: false });
+    </script>
+</body>
+</html>
+```
+**OUTPUT-** ![App Screenshot](	https://media.geeksforgeeks.org/wp-content/uploads/20210820002347/bubbling1.gif)
+
+When we clicked on the div with the child as its id, we should get the output as ‘child’ on our console. But unexpectedly, we are receiving a different output even we have not clicked on divs with parent and grandparent as their id. The concept of event bubbling comes into the picture. The child div lies inside the parent div as well as in the grandparent div. So, when the child div clicked, we indirectly clicked on both parent div and grandparent div. Thus, propagation is moving from inside to outside in the DOM or we can say events are getting bubble up. 
+
+Therefore, the process of propagating from the closest element to the farthest away element in the DOM (Document Object Modal) is called event bubbling
+
+**Example 2:** In the above example, let us change the value of the third parameter of addEventListener() and see what changes will be made in the output.
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <style>
+        div {
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+        h2 {
+            color: black;
+        }
+        #grandparent {
+            background-color: green;
+            width: 300px;
+            height: 300px;
+        }
+        #parent {
+            background-color: blue;
+            width: 200px;
+            height: 200px;
+        }
+        #child {
+            background-color: red;
+            width: 100px;
+            height: 100px;
+        }
+    </style>
+</head>
+ 
+<body>
+    <div>
+        <h2>Welcome To GFG</h2>
+        <div id="grandparent">GrandParent
+            <div id="parent">Parent
+                <div id="child"> Child</div>
+            </div>
+        </div>
+    </div>
+    <script>
+        const grandParent = document.getElementById("grandparent");
+        const parent = document.getElementById("parent");
+        const child = document.getElementById("child");
+         
+        // Changing value of capture parameter as 'true'
+        grandParent.addEventListener("click", (e) => {
+            console.log("GrandParent");
+        }, { capture: true });
+        parent.addEventListener("click", (e) => {
+            console.log("Parent");
+        }, { capture: true });
+        child.addEventListener("click", (e) => {
+            console.log("Child");
+        }, { capture: true });
+    </script>
+</body>
+ 
+</html>
+```
+**OUTPUT-** ![App Screenshot](https://media.geeksforgeeks.org/wp-content/uploads/20210820003211/bubbling2.gif)
+
+We can see that the event capturing of event listeners happened first and then the event bubbling happened. This means the propagation of event listeners first goes from outside to inside and then from inside to outside in the DOM. 
+
+### How to stop event bubbling and event capturing?
+
+In the above example, we can see a parameter “e” (or sometimes called as “event”) in the callback function of addEventListener(). It is an event object which automatically defines when we add an event listener to an element. This object ‘e’ has a function called stopPropagation() which helps to prevent this annoying behavior.
+
+**Example 4:** Let’s see what will happen when we will click on child div in the below code.
+
+```html
+<!DOCTYPE html>
+<html>
+
+<head>
+	<style>
+		div {
+			color: white;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			flex-direction: column;
+		}
+		h2 {
+			color: black;
+		}
+		#grandparent {
+			background-color: green;
+			width: 300px;
+			height: 300px;
+		}
+		#parent {
+			background-color: blue;
+			width: 200px;
+			height: 200px;
+		}
+		#child {
+			background-color: red;
+			width: 100px;
+			height: 100px;
+		}
+	</style>
+</head>
+
+<body>
+	<div>
+		<h2>Welcome To GFG</h2>
+		<div id="grandparent">GrandParent
+			<div id="parent">Parent
+				<div id="child"> Child</div>
+			</div>
+		</div>
+	</div>
+
+	<script>
+		const grandParent = document.getElementById("grandparent");
+		const parent = document.getElementById("parent");
+		const child = document.getElementById("child");
+		grandParent.addEventListener("click", (e) => {
+			console.log("GrandParent bubbling");
+		});
+		parent.addEventListener("click", (e) => {
+			e.stopPropagation(); //syntax to stop event bubbling
+			console.log("Parent bubbling");
+		});
+		child.addEventListener("click", (e) => {
+			console.log("Child bubbling");
+		});
+	</script>
+</body>
+
+</html>
+```
+**OUTPUT-** ![App Screenshot](https://media.geeksforgeeks.org/wp-content/uploads/20210820003922/bubbling4.gif)
+
+If we clicked on child div, the propagation is stopped on parent div and does not move to grandparent div. Hence, the event bubbling is prevented. 
+
+**Note:** The event capturing can also be prevented using the same way.
+
+**Important points to remember:**
+
+- If we do not mention any third parameter in addEventListener(), then by `default event bubbling will happen`.
+- Event bubbling and event capturing happen only when the element and it’s all ancestors have the same event listener (in our case, ‘click’ event) attach to them.
+**Conclusion:** We have learned about event bubbling and event capturing and these are some key points.
+
+- Event capturing means propagation of event is done from ancestor elements to child element in the DOM while event bubbling means propagation is done from child element to ancestor elements in the DOM.
+- The event capturing occurs followed by event bubbling.
+- If {capture: true} ,event capturing will occur else event bubbling will occur.
+- Both can be prevented by using the stopPropagation() method.
+
+### What are Anonymous Functions?
+An anonymous function is simply a function that does not have a name. Unlike named functions, which are declared with a name for easy reference, anonymous functions are usually created for specific tasks and are often assigned to variables or used as arguments for other functions.
+
+In JavaScript, you normally use the function keyword followed by a name to declare a function. However, in an anonymous function, the name is omitted. These functions are often used in situations where you don’t need to reuse the function outside its immediate context.
+
+**Syntax -**
+The below-enlightened syntax illustrates the declaration of an anonymous function using the normal declaration:
+```javascript
+function() {
+    // Function Body
+ }
+```
+As JavaScript supports Higher-Order Functions, we can also pass anonymous functions as parameters into another function.
+
+**Example :** In this example, we pass an anonymous function as a callback function to the setTimeout() method. This executes this anonymous function 2000ms later.
+```javascript
+<script>
+    setTimeout(function () {
+        console.log("Welcome to GeeksforGeeks!");
+    }, 2000);
+</script>
+```
+
+#### Self-Executing Anonymous Functions
+Another common use of anonymous functions is to create self-executing functions (also known as IIFE – Immediately Invoked Function Expressions). These functions run immediately after they are defined.
+
+**Example :** In this example, we have created a self-executing function.
+```javascript
+<script>
+    (function () {
+        console.log("Welcome to GeeksforGeeks!");
+    })();
+</script>
+```
+
+### What is isomorphic javascript?
+They are, more recently, also called universal. I'm not sure about the whole app being called isomorphic/universal, but you can certainly have parts of the code base that is universal.
+
+Isomorphic/universal code is code that runs on both the client (browser) and on the server (NodeJS). Since they are both JavaScript this something that is possible if:
+
+- you do not mention window, document or any other browser-only methods
+- you do not mention server, fs or any or any other node-only methods.
+- If you do need to do the above within some code that is meant to be universal, you should wrap it in a function that either mocks the required method within the alternate environment or wrap it in conditionals so that the app doesn't crash.
+
+An example is `console.log` which will work both within NodeJS and any browser, along with most other es6 methods in modern browsers.
+```javascript
+console.log('universal/ isomorphic code...')
+```
+
+I use build tools (like webpack) to then help create / export functions within individual files so that we then have a bundle like client-app.js which is included in the HTML file and is the browser only js. The server then might start using server-app.js which is the server-only bundle. Both bundles can be created using a lot of the same universal source code.
+
+### What is a polyfill? Code a polyfill for the map method?
+
+A polyfill is a way of code writing to implement a feature in a browser that does not yet support it. It could be because of the older version of the browser you are using, or because the new version of the browser does not have that feature. 
+
+#### Default functinality of map function -
+```javascript
+const arr = [1, 2, 3, 4]; 
+  
+// Multiply each element with 2 
+// and return a new array 
+const result = arr.map((item) => item * 2) 
+  
+console.log(result); 
+  
+// Add 2 to each element of the array 
+// and return new array 
+const newArr = arr.map(function (item) { return item + 2 }) 
+  
+console.log(newArr);
+
+//Output - 
+[2, 4, 6, 8]
+[3, 4, 5, 6 ]
+```
+Now let’s create our own implementation of the Array.prototype.map method:
+
+#### Steps:
+
+- We will create a map prototype function that will take a callback function as input.
+- We will declare a const variable named as resultArray and initialize it with an empty array.
+- We will iterate through all the elements of the array on which we want to call the map method and for each of the elements we will execute the callback function and whatever the callback function returns we will store it inside the resultArray.
+- We will lastly return the resultArray.
+
+```javascript
+const arr = [1, 2, 3, 4]; 
+
+Array.prototype.map = function (callBack) { 
+	const resultArray = []; 
+
+	if (typeof callBack !== "function") { 
+		throw Error(`${callBack} is not a function`) 
+	} 
+	for (let i = 0; i < this.length; i++) { 
+		resultArray.push(callBack(this[i], i, this)); 
+	} 
+	return resultArray; 
+} 
+
+// Multiply each element with its index 
+// and return a new array 
+const result = arr.map((item, index) => item * index) 
+console.log(result); 
+
+// Add 2 to each element of the array 
+// and return new array 
+const newArr = 
+	arr.map(function (item) { return item + 2 }) 
+
+console.log(newArr);
+
+//Output
+[0, 2, 6, 12]
+[3, 4, 5, 6]
+```
+
+### What is a debounce function? (Example of use case - api call for search suggestions triggered when input changes)?.
+Debouncing is a technique in programming that helps improve the performance of web applications by controlling the frequency at which time-consuming tasks are triggered. If a task is triggered too often—like when a user types quickly or rapidly clicks a button—it can lead to performance issues. Debouncing provides a solution by limiting how frequently a function can be executed.
+
+#### Debouncing -
+In JavaScript, debouncing is commonly used to enhance browser performance by ensuring that expensive operations (like complex calculations, API calls, or DOM updates) are executed only when necessary. JavaScript operates in a single-threaded environment, meaning it can only handle one operation at a time. When certain actions are triggered too frequently, such as during continuous scrolling or typing, it can overload the browser and cause sluggish performance.
+
+```javascript
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" 
+          content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <button id="debounce">
+        Debounce
+    </button>
+    <script>
+        let button = document.getElementById("debounce");
+        const debounce = (func, delay) => {
+            let debounceTimer
+            return function () {
+                const context = this
+                const args = arguments
+                clearTimeout(debounceTimer)
+                debounceTimer
+                    = setTimeout(() => func.apply(context, args), delay)
+            }
+        }
+        button.addEventListener('click', debounce(function () {
+            alert("Hello\nNo matter how many times you" +
+                "click the debounce button, I get " +
+                "executed once every 3 seconds!!")
+        }, 3000));
+    </script>
+</body>
+```
+
+***Output -*** ![App Screenshot](https://media.geeksforgeeks.org/wp-content/uploads/20231218184801/shvjahsfvjsfhvjshdfbkajsflsdjgn.gif)
+
+#### Application -
+Debouncing finds practical use in various scenarios within web development. For instance, it can be used in implementing suggestive text features. Here, we wait for the user to pause typing for a few seconds before offering suggestions. With debouncing, we ensure that suggestions are only provided after a brief pause, preventing constant updates with each keystroke.
+
+Another application of debouncing is in content-heavy webpages like Facebook and Twitter. As users scroll through their feeds, frequent firing of the scroll event can lead to performance issues, especially with numerous videos and images to load. By implementing debouncing, we can regulate the frequency of the scroll event, reducing the performance impact and creating a smoother browsing experience.
  
